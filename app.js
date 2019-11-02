@@ -1,18 +1,13 @@
-var express = require('express');
-var app = express();
+let bodyParser = require('body-parser');
+let express = require('express');
+let app = express();
 
-app.get('/', function(req, res) {
-  res.send({
-    "Output": "Hello World!"
-  });
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-app.post('/', function(req, res) {
-  res.send({
-    "Output": "Hello World!"
-  });
-});
+const pets = require('./pets/pets-router');
+app.use('/pets', pets);
 
-
-// Export your Express configuration so that it can be consumed by the Lambda handler
+// Export your Express configuration so that it can be consumed by the Lambda
+// handler
 module.exports = app
